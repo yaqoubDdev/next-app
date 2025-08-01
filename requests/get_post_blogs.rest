@@ -8,3 +8,7 @@ Content-Type: application/json
   "title": "godolkin",
   "content": "a learning place for sups"
 }
+
+###
+GET http://localhost:3000/api/blogs/6888283ddc63677f4bece32a
+###
