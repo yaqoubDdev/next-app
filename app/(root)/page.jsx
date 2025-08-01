@@ -56,7 +56,6 @@ const page = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if(loggedUserJSON){
       const user = JSON.parse(loggedUserJSON)
-      console.log(user)
       setUser(user)
       blogservice.setToken(user.token)
       handleNoti(`logged in user: ${user.name}`)
@@ -68,7 +67,6 @@ const page = () => {
     async function getBlogs(){
       try {
         const data = await blogservice.getAllBlogs()
-        console.log(data)
         setBlogs(data) 
       } catch (error) {
         console.log(error)
@@ -100,7 +98,6 @@ const page = () => {
       setUser(user)
       handleNoti('login succesful')
     } catch (exception) {
-      console.log(exception)
       handleErrNoti('wrong username or password')
     }
 
@@ -110,11 +107,10 @@ const page = () => {
     try {
       const savedBlog = await blogservice.createNewBlog(blog)
       setBlogs(b => [...b, savedBlog])
-      console.log(savedBlog)
       setBlog({title: '', content: ''})
       handleNoti(`created blog: ${savedBlog.title}`)
     } catch (error) {
-      console.log(error.response.data)
+      handleErrNoti(error.response.data)
     }
   }
 
