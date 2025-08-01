@@ -1,0 +1,36 @@
+{
+  "blogs": [
+    {
+      "id": "0203",
+      "title": "jidemx",
+      "content": "djewnmxks",
+      "imageUrl": ""
+    },
+    {
+      "id": "4d9e",
+      "title": "jidemx",
+      "content": "djewnmxks",
+      "imageUrl": ""
+    }
+  ],
+  "users": [
+    {
+      "id": "4b9a",
+      "username": "yaqoub",
+      "name": "yakub swaray",
+      "password": "password"
+    },
+    {
+      "id": "cfd9",
+      "username": "dj",
+      "name": "cory",
+      "password": "coryx"
+    },
+    {
+      "id": "0ec8",
+      "username": "ballah999",
+      "name": "ballah",
+      "password": "ballah999"
+    }
+  ]
+}
