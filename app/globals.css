@@ -4,3 +4,7 @@ body {
   /* background-color: hsl(0, 0%, 56%); */
   font-family: Arial, Helvetica, sans-serif;
 }
+
+button{
+  cursor: pointer;
+}

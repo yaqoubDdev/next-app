@@ -1,11 +1,12 @@
 'use client'
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import blogservice from "@/services/blogservice"
 import loginservice from "@/services/login"
 import styles from './blogs.module.css'
 import Togglable from "../components/Toggable"
 import LoginForm from "../components/LoginForm"
 import BlogForm from "../components/BlogForm"
+import Blog from '../components/Blog'
 
 const Notification = ({message}) => {
   if (message === null) return null
@@ -24,21 +25,7 @@ const ErrorNotification = ({message}) => {
   )
 }
 
-const Blog = ({blog}) => {
 
-  return (
-    <div className={styles.blog}>
-      <div className={styles.namesContainer}>
-        <span>{blog.user.name}</span>
-        <span>{blog.user.username}</span>
-      </div>
-      <div className={styles.infoContainer}>
-        <h3>{blog.title}</h3>
-        <p>{blog.content}</p>
-      </div>
-    </div>
-  )
-} 
 
 
 
@@ -46,10 +33,10 @@ const Blog = ({blog}) => {
 const page = () => {
 
   const [blogs, setBlogs] = useState([])
-  const [blog, setBlog] = useState({title: '', content: ''})
   const [user, setUser] = useState(null)
   const [notification, setNotification] = useState(null)
   const [erorMessage, setErrorMessage] = useState(null)
+  const blogFormRef = useRef()
 
 
   useEffect(() => {
@@ -105,9 +92,9 @@ const page = () => {
 
   const handleCreateBlog = async (blog) => {
     try {
+      blogFormRef.current.toggleVisibility()
       const savedBlog = await blogservice.createNewBlog(blog)
       setBlogs(b => [...b, savedBlog])
-      setBlog({title: '', content: ''})
       handleNoti(`created blog: ${savedBlog.title}`)
     } catch (error) {
       handleErrNoti(error.response.data)
@@ -117,6 +104,19 @@ const page = () => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     setUser(null)
+  }
+
+  const handleDeleteBlog = async (id) => {
+    try {
+      const res = await blogservice.deleteBlog(id)
+      
+      if(res.status === 201){
+        setBlogs(blogs.filter(blog => blog.id !== id))
+        handleNoti(`deleted blog: ${id}`)
+      }
+    } catch (error) {
+      handleErrNoti('token invalid or expired')
+    }
   }
 
 
@@ -134,7 +134,7 @@ const page = () => {
 
   const blogForm = () => {
     return (
-      <Togglable buttonLabel='new blog'>
+      <Togglable buttonLabel='new blog' ref={blogFormRef}>
         <BlogForm 
           createBlog={handleCreateBlog}
         />
@@ -158,7 +158,7 @@ const page = () => {
       <h2>Blogs</h2>
       <div>
         {blogs.map(blog => (
-          <Blog key={blog.id} blog={blog} />
+          <Blog key={blog.id} blog={blog} handleDelete={handleDeleteBlog} />
         ))}
         
       </div>

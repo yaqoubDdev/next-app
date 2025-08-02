@@ -47,10 +47,10 @@ export async function DELETE(request, context){
 
   if( blog.user.toString() === userid.toString()){
     await Blog.findByIdAndDelete(params.id)
-    return NextResponse.json({message: `deleted blog ${params.id}`},  {status: 200})
+    return NextResponse.json({message: `deleted blog ${params.id}`},  {status: 201})
   }
 
-  return NextResponse.json({error: 'unauthorized id'})
+  return NextResponse.json({error: 'unauthorized id'}, {status: 401})
 
 
 

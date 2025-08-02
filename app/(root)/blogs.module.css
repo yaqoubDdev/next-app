@@ -2,6 +2,7 @@
 .blog{
   padding: 5px;
   border: 2px solid black;
+  box-shadow: 5px 5px 0 black, -2px -2px 0 black;
   border-radius: 5px;
   width: 300px;
   margin: 10px 0;
@@ -47,6 +48,21 @@
   font-weight: bold;
   border-radius: 5px;
   margin: 5px 0;
+}
+
+.likeButton{
+  border: none;
+  background: hsl(0, 100%, 50%);
+  color: white;
+  border-radius: 5px;
+  /* padding: 5px 10px; */
+}
+
+.likeButton:hover{
+  background: hsl(0, 100%, 70%);
+}
+.likeButton:active{
+  background: hsl(0, 100%, 30%);
 }
 
 
