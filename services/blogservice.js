@@ -37,9 +37,9 @@ const likeBlog = async id => {
     headers: { Authorization: token}
   }
 
-  const request = await axios.put(`${baseurl}/${id}/like`)
+  const request = await axios.put(`${baseurl}/${id}/like`, '', config)
   return request.data
 }
 
 
-export default { getAllBlogs, createNewBlog, deleteBlog, setToken }
+export default { getAllBlogs, createNewBlog, deleteBlog, setToken, likeBlog }

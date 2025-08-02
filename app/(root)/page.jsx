@@ -104,6 +104,7 @@ const page = () => {
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
     setUser(null)
+    blogservice.setToken(null)
   }
 
   const handleDeleteBlog = async (id) => {

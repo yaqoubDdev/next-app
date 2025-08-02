@@ -50,12 +50,12 @@
   margin: 5px 0;
 }
 
-.likeButton{
+/* .likeButton{
   border: none;
   background: hsl(0, 100%, 50%);
   color: white;
   border-radius: 5px;
-  /* padding: 5px 10px; */
+  padding: 5px 10px; 
 }
 
 .likeButton:hover{
@@ -63,7 +63,7 @@
 }
 .likeButton:active{
   background: hsl(0, 100%, 30%);
-}
-
+} */
+ 
 
 
