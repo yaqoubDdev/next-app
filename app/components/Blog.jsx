@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import styles from '@/app/(root)/blogs.module.css'
 import blogservice from "@/services/blogservice"
 import { getUserIdFromToken } from "@/utils/getUserId"
-import { set } from "mongoose"
 
 const Blog = ({blog, handleDelete}) => {
   const [showDetails, setShowDetails] = useState(true)
