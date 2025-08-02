@@ -7,6 +7,7 @@ import Togglable from "../components/Toggable"
 import LoginForm from "../components/LoginForm"
 import BlogForm from "../components/BlogForm"
 import Blog from '../components/Blog'
+import { Button } from "@/components/ui/button"
 
 const Notification = ({message}) => {
   if (message === null) return null
@@ -150,7 +151,7 @@ const page = () => {
       {user === null ?
         loginForm() : 
         <div>
-          <span>{user.name} logged in</span><button onClick={handleLogout}>logout</button>
+          <span>{user.name} logged in</span><Button onClick={handleLogout}>logout</Button>
           {blogForm()}
         </div>
       }

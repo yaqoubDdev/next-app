@@ -1,5 +1,7 @@
 'use client'
 import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 const BlogForm = ({ createBlog }) => {
   const [blog, setBlog] = useState({title: '', content: ''})
@@ -20,21 +22,23 @@ const BlogForm = ({ createBlog }) => {
     <form onSubmit={addBlog}>
       <div>
         title
-          <input
+          <Input
           type="text"
           value={blog.title}
+          placeholder='Title'
           onChange={({ target }) => setBlog( b => ({...b, title: target.value}))}
         />
       </div>
       <div>
         content
-          <input
+          <Input
           type="text"
           value={blog.content}
+          placeholder='Content'
           onChange={({ target }) => setBlog( b => ({...b, content: target.value}))}
         />
       </div>
-      <button type="submit">create</button>
+      <Button type="submit">create</Button>
     </form>
   )
 }

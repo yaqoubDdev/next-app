@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 
 const LoginForm = ({ handleLogin }) => {
 
@@ -20,7 +22,8 @@ const LoginForm = ({ handleLogin }) => {
       <form onSubmit={login}>
         <div>
           username
-          <input
+          <Input
+            placeholder='Username'
             type="text"
             value={username}
             onChange={({ target }) => setUsername(target.value)}
@@ -28,13 +31,14 @@ const LoginForm = ({ handleLogin }) => {
         </div>
         <div>
           password
-          <input
+          <Input
+            placeholder='Username'
             type="password"
             value={password}
             onChange={({ target }) => setPassword(target.value)}
           />
         </div>
-        <button type="submit">login</button>
+        <Button type="submit">login</Button>
       </form>
     </>
   )

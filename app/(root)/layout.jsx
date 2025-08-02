@@ -2,7 +2,7 @@
 export default function Layout({children}){
   return(
     <main>
-      <header>Blog App</header>
+      <header className="text-2xl font-bold underline">Blog App</header>
       {children}
       <footer>
         <h4>Yakuba Swaray, Freetown 2025</h4>

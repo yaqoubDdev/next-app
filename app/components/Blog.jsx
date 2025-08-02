@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import styles from '@/app/(root)/blogs.module.css'
 import blogservice from "@/services/blogservice"
 import { getUserIdFromToken } from "@/utils/getUserId"
+import { Button } from "@/components/ui/button"
 
 const Blog = ({blog, handleDelete}) => {
   const [showDetails, setShowDetails] = useState(true)
@@ -36,7 +37,7 @@ const Blog = ({blog, handleDelete}) => {
     return (
       <div className={styles.blog}>
         <div className={styles.namesContainer}>
-          <span>{blog.user.username}</span>
+          <span className="underline">{blog.user.username}</span>
           <button onClick={toggleShowDetails}>hide</button>
         </div>
         <div className={styles.infoContainer}>
@@ -45,15 +46,13 @@ const Blog = ({blog, handleDelete}) => {
         </div>
         <div>
           <span>likes: {likes}</span>
-          <button 
+          <Button 
             onClick={() => handleLike(blog.id)} 
-            className={styles.likeButton} 
-            style={{ color: hasLiked ? 'black' : 'red'}}
           >
             {hasLiked ? 'unlike' : 'like'}
-          </button>
+          </Button>
         </div>
-        <button onClick={() => handleDelete(blog.id)}>delete</button>
+        <Button onClick={() => handleDelete(blog.id)}>delete</Button>
       </div>
     ) 
   }
@@ -62,7 +61,7 @@ const Blog = ({blog, handleDelete}) => {
     <div className={styles.blog}>
       <div className={styles.namesContainer}>
         <span>{blog.user.username}</span>
-        <button onClick={toggleShowDetails}>view</button>
+        <Button onClick={toggleShowDetails}>view</Button>
       </div>
       <div className={styles.infoContainer}>
         <h3>{blog.title}</h3>
