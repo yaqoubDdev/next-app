@@ -15,10 +15,10 @@ const userSchema = new mongoose.Schema({
       ref: 'Blog'
     }
   ],
-  likes: [
+  likedBlogs: [
     {  
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Like'
+      ref: 'Blog'
     }
 
   ]
