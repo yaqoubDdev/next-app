@@ -86,6 +86,7 @@ const page = () => {
       setUser(user)
       handleNoti('login succesful')
     } catch (exception) {
+      console.log(exception)
       handleErrNoti('wrong username or password')
     }
 
@@ -158,7 +159,7 @@ const page = () => {
       
       
       <h2>Blogs</h2>
-      <div>
+      <div className="">
         {blogs.map(blog => (
           <Blog key={blog.id} blog={blog} handleDelete={handleDeleteBlog} />
         ))}

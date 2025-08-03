@@ -10,6 +10,7 @@
     "server": "json-server  db.json -p 4000"
   },
   "dependencies": {
+    "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-slot": "^1.2.3",
     "@tailwindcss/postcss": "^4.1.11",
     "axios": "^1.9.0",

@@ -9,6 +9,7 @@ const Blog = ({blog, handleDelete}) => {
   const [showDetails, setShowDetails] = useState(true)
   const [likes, setLikes] = useState(blog.likes.length)
   const [hasLiked, setHasLiked] = useState(false)
+  const [isLiking, setIsLiking] = useState(false)
 
   const userId = getUserIdFromToken()
 
@@ -27,44 +28,58 @@ const Blog = ({blog, handleDelete}) => {
   }
 
   const handleLike = async (id) => {
-    const res = await blogservice.likeBlog(id)
-    setLikes(res.blogLikesCount)
-    console.log(res)
-    setHasLiked(!hasLiked)
+    setIsLiking(true)
+    try {
+      const res = await blogservice.likeBlog(id)
+      setLikes(res.blogLikesCount)
+  
+      console.log(res)
+      setHasLiked(!hasLiked)
+    } catch (error) {
+      
+    }finally {
+      setIsLiking(false)
+    }
   }
 
   if(showDetails){
     return (
-      <div className={styles.blog}>
-        <div className={styles.namesContainer}>
-          <span className="underline">{blog.user.username}</span>
-          <button onClick={toggleShowDetails}>hide</button>
+      <div className='p-[5] w-[300] border-2 rounded-sm shadow-sm'>
+        <div className='flex justify-between text-gray-500 hover:text-gray-700 '>
+          <span className="underline cursor-pointer">{blog.user.username}</span>
+          <Button onClick={toggleShowDetails} variant='secondary' size='sm'>hide</Button>
         </div>
-        <div className={styles.infoContainer}>
-          <h3>{blog.title}</h3>
+        <div className='flex flex-col gap-[5]'>
+          <h3 className="uppercase">{blog.title}</h3>
           <p>{blog.content}</p>
         </div>
-        <div>
+        <div className="flex items-center">
           <span>likes: {likes}</span>
+        </div>
+        <div className="grid w-full gap-3 my-3 grid-cols-2">
           <Button 
+            disabled={isLiking}
             onClick={() => handleLike(blog.id)} 
           >
             {hasLiked ? 'unlike' : 'like'}
           </Button>
+          <Button onClick={() => handleDelete(blog.id)} variant='destructive'>delete</Button>
         </div>
-        <Button onClick={() => handleDelete(blog.id)}>delete</Button>
       </div>
     ) 
   }
 
   return (
-    <div className={styles.blog}>
-      <div className={styles.namesContainer}>
-        <span>{blog.user.username}</span>
-        <Button onClick={toggleShowDetails}>view</Button>
+    <div className='p-[5] w-[300] border-2 rounded-sm shadow-sm'>
+      <div className='flex justify-between text-gray-500 hover:text-gray-700'>
+        <span className="underline cursor-pointer">{blog.user.username}</span>
+        <Button onClick={toggleShowDetails} size='sm'>view</Button>
       </div>
       <div className={styles.infoContainer}>
         <h3>{blog.title}</h3>
+      </div>
+      <div className="flex items-center">
+        <span className="">likes: {likes}</span>
       </div>
     </div>
   )
