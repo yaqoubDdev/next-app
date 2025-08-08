@@ -1,6 +1,6 @@
 import {jwtDecode} from 'jwt-decode'
 
-export function getUserIdFromToken() {
+export function getUserIdFromToken(token) {
   const userJSON = localStorage.getItem('loggedBlogappUser')
   if (!userJSON) return null
 

@@ -44,7 +44,7 @@ const Blog = ({blog, handleDelete}) => {
 
   if(showDetails){
     return (
-      <div className='p-[5] w-[300] border-2 rounded-sm shadow-sm'>
+      <div className='w-[350] h-auto  p-2 border-2 border-gray-500 shadow-lg rounded-sm '>
         <div className='flex justify-between text-gray-500 hover:text-gray-700 '>
           <span className="underline cursor-pointer">{blog.user.username}</span>
           <Button onClick={toggleShowDetails} variant='secondary' size='sm'>hide</Button>
@@ -56,7 +56,7 @@ const Blog = ({blog, handleDelete}) => {
         <div className="flex items-center">
           <span>likes: {likes}</span>
         </div>
-        <div className="grid w-full gap-3 my-3 grid-cols-2">
+        <div className="grid w-full gap-3 my-2 grid-cols-2">
           <Button 
             disabled={isLiking}
             onClick={() => handleLike(blog.id)} 
@@ -70,7 +70,7 @@ const Blog = ({blog, handleDelete}) => {
   }
 
   return (
-    <div className='p-[5] w-[300] border-2 rounded-sm shadow-sm'>
+    <div className='w-[350]  p-2 border-2 border-gray-500 shadow-lg rounded-sm'>
       <div className='flex justify-between text-gray-500 hover:text-gray-700'>
         <span className="underline cursor-pointer">{blog.user.username}</span>
         <Button onClick={toggleShowDetails} size='sm'>view</Button>

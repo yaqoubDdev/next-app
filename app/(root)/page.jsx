@@ -159,7 +159,7 @@ const page = () => {
       
       
       <h2>Blogs</h2>
-      <div className="">
+      <div className=" w-full flex gap-5 flex-wrap justify-around">
         {blogs.map(blog => (
           <Blog key={blog.id} blog={blog} handleDelete={handleDeleteBlog} />
         ))}
