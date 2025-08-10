@@ -1,7 +1,9 @@
+'use client'
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import Link from "next/link"
 import {
   Card,
   CardAction,
@@ -12,7 +14,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-const LoginForm = ({ handleLogin }) => {
+const LoginForm = ({ handleLogin, handleErrNoti }) => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -20,7 +22,7 @@ const LoginForm = ({ handleLogin }) => {
   const login = (e) => {
     e.preventDefault()
     if(!username || !password){
-      alert('fill from first')
+      handleErrNoti('fill from first')
       return
     }
     handleLogin({username, password})
@@ -33,7 +35,11 @@ const LoginForm = ({ handleLogin }) => {
         <CardDescription>
           Enter username and password below to login to your account
         </CardDescription>
-        <CardAction>Sign Up</CardAction>
+        <CardAction>
+          <Link href='/signup'>
+            <Button variant='link'>Sign Up</Button>
+          </Link>
+        </CardAction>
       </CardHeader>
       <CardContent>
         {/* <LoginForm /> */}

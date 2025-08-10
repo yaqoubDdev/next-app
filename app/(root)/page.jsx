@@ -130,6 +130,7 @@ const page = () => {
         <Togglable buttonLabel='login' >
             <LoginForm
               handleLogin={handleLogin}
+              handleErrNoti={handleErrNoti}
             />
         </Togglable>
     )
@@ -140,10 +141,13 @@ const page = () => {
       <Togglable buttonLabel='new blog' ref={blogFormRef}>
         <BlogForm 
           createBlog={handleCreateBlog}
+          handleErrNoti={handleErrNoti}
         />
       </Togglable>
     )
   }
+
+  const reverseIndexBlogs = [...blogs].reverse()
 
   return (
     <div>
@@ -160,7 +164,7 @@ const page = () => {
       
       <h2>Blogs</h2>
       <div className=" w-full flex gap-5 flex-wrap justify-around">
-        {blogs.map(blog => (
+        {reverseIndexBlogs.map(blog => (
           <Blog key={blog.id} blog={blog} handleDelete={handleDeleteBlog} />
         ))}
         

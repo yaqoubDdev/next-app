@@ -14,13 +14,13 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-const BlogForm = ({ createBlog }) => {
+const BlogForm = ({ createBlog, handleErrNoti }) => {
   const [blog, setBlog] = useState({title: '', content: ''})
 
   const addBlog = (e) => {
     e.preventDefault()
     if (!blog.title || !blog.content){
-      alert('fill title and/or content')
+      handleErrNoti('fill title and/or content field(s)')
       return
     }
 
