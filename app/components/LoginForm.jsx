@@ -35,6 +35,9 @@ const LoginForm = ({ handleLogin, handleErrNoti }) => {
         <CardDescription>
           Enter username and password below to login to your account
         </CardDescription>
+        <CardDescription>
+          If you don not have an account, you can create one by clicking the sighup button to the right.
+        </CardDescription>
         <CardAction>
           <Link href='/signup'>
             <Button variant='link'>Sign Up</Button>
