@@ -3,6 +3,9 @@ import Blog from "@/models/Blog"
 import User from "@/models/User"
 import jwt from 'jsonwebtoken'
 import { NextResponse } from "next/server"
+import { createClient } from "@supabase/supabase-js"
+
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY)
 
 // Extract Bearer token from Authorization header
 function getTokenFrom(request) {
@@ -21,10 +24,12 @@ export async function GET() {
 
 export async function POST(request) {
   await connectToDatabase()
-  const body = await request.json()
   const token = getTokenFrom(request)
-  console.log(body)
+  const formData = await request.formData()
 
+  const file = formData.get('image')
+  const content = formData.get('content')
+  const title = formData.get('title')
 
   let decodedToken
   try {
@@ -42,23 +47,63 @@ export async function POST(request) {
   if (!user) {
     return NextResponse.json({ error: 'User not found' }, { status: 400 })
   }
-
-  const { title, content, imageUrl } = body
   if (!content) {
     return NextResponse.json({ error: 'Content missing' }, { status: 400 })
   }
 
+
+
+  console.log({body: {content, title}, file: file})
+  console.log({fileExists: !file? 'file does not exist': 'file exists', fileType: typeof(file)})
+
+  if(file === 'null'){
+    const blog = new Blog({
+    title,
+    content,
+    imageUrl: '',
+    user: user._id
+    })
+
+    const savedBlog = await blog.save()
+    user.blogs = user.blogs.concat(savedBlog._id)
+    await user.save()
+    await savedBlog.populate('user', {username: 1, name: 1, _id: 1})
+
+    return NextResponse.json(savedBlog, { status: 201 })
+
+  }
+
+  const fileName = `${user._id}-${Date.now()}-${file.name}`
+
+  const { data, error } = await supabase.storage
+    .from('allimage')
+    .upload(fileName, file, { cacheControl: '3600', upsert: false })
+  
+  if(error){
+    console.log(error)
+    return NextResponse.json({ error: error.message, }, { status: 500 })
+  }
+
+
+  const { data: publicUrlData } = supabase.storage
+    .from('allimage')
+    .getPublicUrl(fileName)
+  
   const blog = new Blog({
     title,
     content,
-    imageUrl,
+    imageUrl: publicUrlData.publicUrl,
     user: user._id
   })
 
   const savedBlog = await blog.save()
   user.blogs = user.blogs.concat(savedBlog._id)
   await user.save()
-  await savedBlog.populate('user', {username: 1, name: 1, _id: 1})
+  await savedBlog.populate('user', { username: 1, name: 1, _id: 1 })
 
   return NextResponse.json(savedBlog, { status: 201 })
+
+  
+
+  
 }

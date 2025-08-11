@@ -4,6 +4,7 @@ import styles from '@/app/(root)/blogs.module.css'
 import blogservice from "@/services/blogservice"
 import { getUserIdFromToken } from "@/utils/getUserId"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 const Blog = ({blog, handleDelete}) => {
   const [showDetails, setShowDetails] = useState(true)
@@ -42,44 +43,64 @@ const Blog = ({blog, handleDelete}) => {
     }
   }
 
+  const renderImage = () => {
+    
+    if(blog.imageUrl){
+      return (
+        <div className="w-full h-[200px]">
+          <Image
+            src={blog.imageUrl} 
+            alt={blog.title} 
+            width={300}
+            height={300}
+            className="w-full h-full object-cover rounded-sm"
+          />
+        </div>
+      )
+    }
+    return null
+  }
+
   if(showDetails){
     return (
-      <div className='w-[350] h-auto  p-2 border-2 border-gray-500 shadow-lg rounded-sm '>
+      <div className='max-w-sm w-full h-fit p-4 border border-gray-300 shadow-md rounded-md bg-white'>
         <div className='flex justify-between text-gray-500 hover:text-gray-700 '>
           <span className="underline cursor-pointer">{blog.user.username}</span>
           <Button onClick={toggleShowDetails} variant='secondary' size='sm'>hide</Button>
         </div>
-        <div className='flex flex-col gap-[5]'>
-          <h3 className="uppercase">{blog.title}</h3>
-          <p>{blog.content}</p>
+        <div className='flex flex-col gap-2 mt-2'>
+          <h3 className="uppercase font-semibold">{blog.title}</h3>
+          <p className="text-gray-700">{blog.content}</p>
         </div>
-        <div className="flex items-center">
-          <span>likes: {likes}</span>
+        {renderImage()}
+        <div className="flex items-center mt-2">
+          <span className="text-sm text-gray-600">likes: {likes}</span>
         </div>
-        <div className="grid w-full gap-3 my-2 grid-cols-2">
-          <Button 
-            disabled={isLiking}
-            onClick={() => handleLike(blog.id)} 
-          >
-            {hasLiked ? 'unlike' : 'like'}
-          </Button>
-          <Button onClick={() => handleDelete(blog.id)} variant='destructive'>delete</Button>
-        </div>
+        {userId && (
+          <div className="grid w-full gap-3 my-3 grid-cols-2">
+            <Button 
+              disabled={isLiking}
+              onClick={() => handleLike(blog.id)} 
+            >
+              {hasLiked ? 'unlike' : 'like'}
+            </Button>
+            <Button onClick={() => handleDelete(blog.id, blog.title)} variant='destructive'>delete</Button>
+          </div>)}
       </div>
     ) 
   }
 
   return (
-    <div className='w-[350]  p-2 border-2 border-gray-500 shadow-lg rounded-sm'>
+    <div className='max-w-sm w-full h-fit p-4 border border-gray-300 shadow-md rounded-md bg-white'>
       <div className='flex justify-between text-gray-500 hover:text-gray-700'>
         <span className="underline cursor-pointer">{blog.user.username}</span>
         <Button onClick={toggleShowDetails} size='sm'>view</Button>
       </div>
-      <div className={styles.infoContainer}>
-        <h3>{blog.title}</h3>
+      <div className='flex flex-col gap-2 mt-2'>
+        <h3 className="uppercase font-semibold">{blog.title}</h3>
       </div>
-      <div className="flex items-center">
-        <span className="">likes: {likes}</span>
+      <div className="flex items-center mt-2">
+        <span className="text-sm text-gray-600">likes: {likes}</span>
       </div>
     </div>
   )

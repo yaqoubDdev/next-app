@@ -24,7 +24,6 @@ export async function DELETE(request, context){
   await connectToDatabase()
   const { params } = await context
   const token = getTokenFrom(request)
-  console.log(token)
 
 
   let decodedToken

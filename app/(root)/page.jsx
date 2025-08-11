@@ -9,6 +9,13 @@ import BlogForm from "../components/BlogForm"
 import Blog from '../components/Blog'
 import { Button } from "@/components/ui/button"
 
+// export const metadata = {
+//   title: 'Blogs',
+//   description: 'Blog application built with Next.js',
+// }
+
+// export const revalidate = 100 // to prevent caching of the page
+
 const Notification = ({message}) => {
   if (message === null) return null
   return (
@@ -93,14 +100,21 @@ const page = () => {
   }
 
   const handleCreateBlog = async (blog) => {
+    blogFormRef.current.toggleVisibility()
+    let savedBlog = null
     try {
-      blogFormRef.current.toggleVisibility()
-      const savedBlog = await blogservice.createNewBlog(blog)
-      setBlogs(b => [...b, savedBlog])
-      handleNoti(`created blog: ${savedBlog.title}`)
+      savedBlog = await blogservice.createNewBlog(blog)
+      console.dir(savedBlog)
     } catch (error) {
       handleErrNoti(error.response.data)
     }
+    if (!savedBlog) {
+      handleErrNoti('blog not created')
+      return
+    }
+
+    setBlogs(b => [...b, savedBlog])
+    handleNoti(`created blog: ${savedBlog.title}`)
   }
 
   const handleLogout = () => {
@@ -109,13 +123,13 @@ const page = () => {
     blogservice.setToken(null)
   }
 
-  const handleDeleteBlog = async (id) => {
+  const handleDeleteBlog = async (id, title) => {
     try {
       const res = await blogservice.deleteBlog(id)
       
       if(res.status === 201){
         setBlogs(blogs.filter(blog => blog.id !== id))
-        handleNoti(`deleted blog: ${id}`)
+        handleNoti(`deleted blog: ${title}`)
       }
     } catch (error) {
       handleErrNoti('token invalid or expired')
@@ -163,7 +177,7 @@ const page = () => {
       
       
       <h2>Blogs</h2>
-      <div className=" w-full flex gap-5 flex-wrap justify-around">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {reverseIndexBlogs.map(blog => (
           <Blog key={blog.id} blog={blog} handleDelete={handleDeleteBlog} />
         ))}

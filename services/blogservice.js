@@ -16,10 +16,17 @@ const getAllBlogs = async () => {
 
 const createNewBlog = async newObject => {
   const config = {
-    headers: { Authorization: token },
+    headers: { 
+      Authorization: token
+    }
   }
-
-  const request = await axios.post(baseurl, newObject, config)
+  console.log({newObject})
+  const formData = new FormData()
+  for(const key in newObject){
+    formData.append(key, newObject[key])
+  }
+  console.log({...formData})
+  const request = await axios.post(baseurl, formData, config)
   return request.data
 }
 

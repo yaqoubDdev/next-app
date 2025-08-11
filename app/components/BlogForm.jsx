@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card"
 
 const BlogForm = ({ createBlog, handleErrNoti }) => {
-  const [blog, setBlog] = useState({title: '', content: ''})
+  const [blog, setBlog] = useState({title: '', content: '', image: null})
 
   const addBlog = (e) => {
     e.preventDefault()
@@ -25,7 +25,7 @@ const BlogForm = ({ createBlog, handleErrNoti }) => {
     }
 
     createBlog(blog)
-    setBlog({title: '', content: ''})
+    setBlog({title: '', content: '', image: null})
 
   }
 
@@ -55,6 +55,15 @@ const BlogForm = ({ createBlog, handleErrNoti }) => {
               placeholder='Content'
               id='content'
               onChange={({ target }) => setBlog( b => ({...b, content: target.value}))}
+            />
+          </div>
+          <div className="grid w-full gap-3 mb-4">
+            <Label htmlFor='title'>Image <span className="text-gray-500">*optional</span></Label>
+              <Input
+              type="file"
+              placeholder='Image'
+              id='image'
+              onChange={({ target }) => setBlog( b => ({ ...b, image: target.files[0] }))}
             />
           </div>
           <div className='grid w-full gap-3 my-3'>
