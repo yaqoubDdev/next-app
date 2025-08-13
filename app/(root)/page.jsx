@@ -8,6 +8,8 @@ import LoginForm from "../components/LoginForm"
 import BlogForm from "../components/BlogForm"
 import Blog from '../components/Blog'
 import { Button } from "@/components/ui/button"
+import auth from "@/services/auth"
+import Link from "next/link"
 
 // export const metadata = {
 //   title: 'Blogs',
@@ -48,15 +50,35 @@ const page = () => {
 
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-    if(loggedUserJSON){
-      const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      blogservice.setToken(user.token)
-      handleNoti(`logged in user: ${user.name}`)
+    async function checkUserToken() {
+      const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
+      if(loggedUserJSON){
+        const user = JSON.parse(loggedUserJSON)
+        try {
+          const res = await  auth.checkUser(user.token)
+          console.log(res)
 
+          user.id = res.user.id
+          user.username = res.user.username
+          user.name = res.user.name
+          setUser(user)
+          blogservice.setToken(user.token)
+          handleNoti(`logged in user: ${user.name}`)
+        } catch (error) {
+          console.log(error)
+          if(error.status === 401){
+            handleErrNoti('token is invalid or has expired')
+          }
+        }
+      } else {
+        handleNoti('welcome, login or signup to use app')
+      }
     }
+
+    checkUserToken()
   }, [])
+
+  
 
   useEffect(() => {
     async function getBlogs(){
@@ -168,7 +190,10 @@ const page = () => {
       <ErrorNotification message={erorMessage} />
       <Notification message={notification} />
       {user === null ?
-        loginForm() : 
+        <div>
+          <Button className='mb-2 mt-2'><Link href='/signup'>Signup</Link></Button>
+          {loginForm()}
+        </div> : 
         <div>
           <span>{user.name} logged in</span><Button onClick={handleLogout}>logout</Button>
           {blogForm()}

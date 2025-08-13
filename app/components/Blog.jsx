@@ -21,6 +21,7 @@ const Blog = ({blog, handleDelete}) => {
     else if(!userId){
       setHasLiked(false)
     }
+
   } , [userId, blog.likes])
 
   const toggleShowDetails = () => {
@@ -84,7 +85,9 @@ const Blog = ({blog, handleDelete}) => {
             >
               {hasLiked ? 'unlike' : 'like'}
             </Button>
-            <Button onClick={() => handleDelete(blog.id, blog.title)} variant='destructive'>delete</Button>
+            {blog.user.id === userId ? (
+              <Button onClick={() => handleDelete(blog.id, blog.title)} variant='destructive'>delete</Button>
+            ) : null}
           </div>)}
       </div>
     ) 
