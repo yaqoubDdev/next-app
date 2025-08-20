@@ -67,7 +67,7 @@ const page = () => {
         } catch (error) {
           console.log(error)
           if(error.status === 401){
-            handleErrNoti('token is invalid or has expired')
+            handleLogout()
           }
         }
       } else {
