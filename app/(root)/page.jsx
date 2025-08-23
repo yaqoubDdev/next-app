@@ -141,6 +141,7 @@ const page = () => {
 
   const handleLogout = () => {
     window.localStorage.removeItem('loggedBlogappUser')
+    setNotification('user logged out')
     setUser(null)
     blogservice.setToken(null)
   }
