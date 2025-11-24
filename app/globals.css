@@ -7,6 +7,7 @@ body {
   padding: 0;
   margin: 5px;
   /* background-color: hsl(0, 0%, 56%); */
+  overflow-x: hidden;
 }
 
 button{

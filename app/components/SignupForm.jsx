@@ -39,7 +39,7 @@ const SignupForm = () => {
   const signup = async (e) => {
     e.preventDefault()
     if(!name || !username || !password){
-      handleErrNoti('fill from first')
+      handleErrNoti('fill form first')
       return
     }
     const user = await handleSignup({name, username, password})
@@ -82,7 +82,7 @@ const SignupForm = () => {
             Enter name, username and password below to signup. if you already have an account, click login.
           </CardDescription>
           <CardAction>
-            <Link href='/'>
+            <Link href='/login'>
               <Button variant='link'>Login</Button>
             </Link>
           </CardAction>
@@ -102,9 +102,7 @@ const SignupForm = () => {
             </div>
             <div className="grid w-full gap-3 mb-3 mt-3"> 
               <Label htmlFor='username'>username</Label>
-              <CardDescription className='p-0 m-0 text-red-500'>
-                Username should be unique
-              </CardDescription>
+              
               <Input
                 placeholder='Username'
                 type="text"

@@ -8,7 +8,6 @@ const setToken = newToken => {
 }
 
 const checkUser = async (inToken) => {
-  console.log(inToken)
   const token = setToken(inToken)
   const config = {
     headers: { Authorization: token }
