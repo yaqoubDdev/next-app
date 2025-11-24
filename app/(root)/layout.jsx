@@ -9,7 +9,7 @@ export default function Layout({ children }) {
           <NavBar />
         </header>
         {children}
-        <footer className="absolute w-full bottom-0 text-center mt-4 bg-white">
+        <footer className="sticky w-full bottom-0 text-center mt-4 bg-white">
           <h4>Yakuba Swaray, Freetown 2025</h4>
         </footer>
       </main>
